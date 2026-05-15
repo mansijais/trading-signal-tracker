@@ -52,7 +52,8 @@ function App() {
       <SignalForm fetchSignals={fetchSignals} />
 
       {loading ? (
-        <p>Loading...</p>
+        // <p>Loading...</p>
+        <p>Fetching live prices...</p>
       ) : (
         <SignalTable signals={signals} deleteSignal={deleteSignal} />
       )}
