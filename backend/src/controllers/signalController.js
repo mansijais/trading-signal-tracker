@@ -44,7 +44,27 @@ const createSignal = async (req, res) => {
     });
   }
 };
+const getSignalById = async (req, res) => {
+  try {
+    const signal = await prisma.signal.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
 
+    if (!signal) {
+      return res.status(404).json({
+        error: "Signal not found",
+      });
+    }
+
+    res.json(signal);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch signal",
+    });
+  }
+};
 const getAllSignals = async (req, res) => {
   try {
     const signals = await prisma.signal.findMany({
@@ -99,27 +119,7 @@ const getAllSignals = async (req, res) => {
   }
 };
 
-const getSignalById = async (req, res) => {
-  try {
-    const signal = await prisma.signal.findUnique({
-      where: {
-        id: Number(req.params.id),
-      },
-    });
 
-    if (!signal) {
-      return res.status(404).json({
-        error: "Signal not found",
-      });
-    }
-
-    res.json(signal);
-  } catch (error) {
-    res.status(500).json({
-      error: "Failed to fetch signal",
-    });
-  }
-};
 
 const deleteSignal = async (req, res) => {
   try {
@@ -133,7 +133,10 @@ const deleteSignal = async (req, res) => {
       return res.status(404).json({
         error: "Signal not found",
       });
-    }
+    } 
+
+
+
     await prisma.signal.delete({
       where: {
         id: Number(req.params.id),
@@ -142,11 +145,11 @@ const deleteSignal = async (req, res) => {
 
     res.json({
       message: "Signal deleted successfully",
-    });
+    })
   } catch (error) {
     res.status(500).json({
       error: "Failed to delete signal",
-    });
+    })
   }
 };
 

@@ -70,46 +70,102 @@ root/
 │   │   ├── services/
 │
 └── README.md
+```
 
+---
 
-Setup Instructions
-Backend Setup
-1. Navigate to backend
+# Setup Instructions
+
+## Backend Setup
+
+### 1. Navigate to backend
+
+```bash
 cd backend
-2. Install dependencies
+```
+
+### 2. Install dependencies
+
+```bash
 npm install
-3. Create environment file
+```
 
-Create a .env file inside backend folder:
+### 3. Create environment file
 
+Create a `.env` file inside backend folder:
+
+```env
 DATABASE_URL="file:./dev.db"
-4. Run Prisma migration
+PORT=5001
+```
+
+### 4. Run Prisma migration
+
+```bash
 npx prisma migrate dev --name init
-5. Start backend server
+```
+
+### 5. Start backend server
+
+```bash
 npm run dev
+```
 
 Backend will run on:
 
-http://localhost:5000
+```bash
+http://localhost:5001
+```
 
-Frontend Setup
+---
 
-1. Navigate to frontend
+# Frontend Setup
+
+## 1. Navigate to frontend
+
+```bash
 cd frontend
-2. Install dependencies
+```
+
+## 2. Install dependencies
+
+```bash
 npm install
-3. Start frontend server
+```
+
+### 3. Create environment file
+
+Create a `.env` file inside frontend folder:
+
+```env
+VITE_API_BASE_URL=http://localhost:5001/api
+```
+
+## 4. Start frontend server
+
+```bash
 npm run dev
+```
 
 Frontend will run on:
 
+```bash
 http://localhost:5173
+```
 
-API Endpoints
+---
 
-Create Signal
+# API Endpoints
+
+## Create Signal
+
+```http
 POST /api/signals
-Request Body
+```
+
+### Request Body
+
+```json
 {
   "symbol": "BTCUSDT",
   "direction": "BUY",
@@ -119,28 +175,51 @@ Request Body
   "entryTime": "2026-05-15T10:00:00",
   "expiryTime": "2026-05-16T10:00:00"
 }
+```
 
-Get All Signals
+---
+
+## Get All Signals
+
+```http
 GET /api/signals
+```
 
-Get Signal By ID
+---
+
+## Get Signal By ID
+
+```http
 GET /api/signals/:id
+```
 
-Delete Signal
+---
+
+## Delete Signal
+
+```http
 DELETE /api/signals/:id
+```
 
-Auto Refresh:-
+---
+
+# Auto Refresh
+
 The frontend automatically refreshes signal data every 15 seconds to fetch updated prices and statuses.
 
-Future Improvements
+---
 
-Authentication
-WebSocket-based live updates
-Advanced charts
-Pagination and filtering
-Better UI/UX styling
-Deployment support
+# Future Improvements
 
-Author
+- Authentication
+- WebSocket-based live updates
+- Advanced charts
+- Pagination and filtering
+- Better UI/UX styling
+- Deployment support
+
+---
+
+# Author
 
 Mansi Jaiswal
