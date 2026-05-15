@@ -1,16 +1,146 @@
-# React + Vite
+# Trading Signal Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack trading signal tracking application built using React, Express.js, Prisma, and SQLite. The application allows users to create and monitor crypto trading signals with live market price updates from the Binance API.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+### Frontend
+- React
+- Vite
+- Axios
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Backend
+- Node.js
+- Express.js
+- Prisma ORM
+- SQLite
 
-## Expanding the ESLint configuration
+### External API
+- Binance Public API
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- Create BUY/SELL trading signals
+- Live crypto price tracking using Binance API
+- Automatic signal status updates
+- ROI calculation
+- Signal expiry tracking
+- Auto-refresh every 15 seconds
+- Delete signals
+- Input validation for trading rules
+
+---
+
+## Signal Status Logic
+
+### BUY Signal
+- Target hit → current price >= target price
+- Stop loss hit → current price <= stop loss
+
+### SELL Signal
+- Target hit → current price <= target price
+- Stop loss hit → current price >= stop loss
+
+### Expiry
+- Signals automatically expire after expiry time
+
+---
+
+## Project Structure
+
+```bash
+root/
+│
+├── backend/
+│   ├── prisma/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── prisma/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── services/
+│
+└── README.md
+
+
+Setup Instructions
+Backend Setup
+1. Navigate to backend
+cd backend
+2. Install dependencies
+npm install
+3. Create environment file
+
+Create a .env file inside backend folder:
+
+DATABASE_URL="file:./dev.db"
+4. Run Prisma migration
+npx prisma migrate dev --name init
+5. Start backend server
+npm run dev
+
+Backend will run on:
+
+http://localhost:5000
+
+Frontend Setup
+
+1. Navigate to frontend
+cd frontend
+2. Install dependencies
+npm install
+3. Start frontend server
+npm run dev
+
+Frontend will run on:
+
+http://localhost:5173
+
+API Endpoints
+
+Create Signal
+POST /api/signals
+Request Body
+{
+  "symbol": "BTCUSDT",
+  "direction": "BUY",
+  "entryPrice": 80000,
+  "stopLoss": 79000,
+  "targetPrice": 82000,
+  "entryTime": "2026-05-15T10:00:00",
+  "expiryTime": "2026-05-16T10:00:00"
+}
+
+Get All Signals
+GET /api/signals
+
+Get Signal By ID
+GET /api/signals/:id
+
+Delete Signal
+DELETE /api/signals/:id
+
+Auto Refresh:-
+The frontend automatically refreshes signal data every 15 seconds to fetch updated prices and statuses.
+
+Future Improvements
+
+Authentication
+WebSocket-based live updates
+Advanced charts
+Pagination and filtering
+Better UI/UX styling
+Deployment support
+
+Author
+
+Mansi Jaiswal
