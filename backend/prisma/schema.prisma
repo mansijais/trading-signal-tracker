@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Signal {
+  id            Int      @id @default(autoincrement())
+  symbol        String
+  direction     String
+  entryPrice    Float
+  stopLoss      Float
+  targetPrice   Float
+  entryTime     DateTime
+  expiryTime    DateTime
+  status        String   @default("OPEN")
+  realizedROI   Float?
+  createdAt     DateTime @default(now())
+}
